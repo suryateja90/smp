@@ -1,36 +1,33 @@
 const express = require('express');
-var app = express();
-var mySql = require('mysql');
-var path = require('path');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var environmentRoot =  require('path').normalize(__dirname );
+const db = require('./api/db');
+const app = express();
+const path = require('path');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const environmentRoot = require('path').normalize(__dirname);
+const routes = require('./api/routes');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
- });
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
- var conncetion = mySql.createConnection({
-   host: 'localhost',
-   user: 'root',
-   password: '1234',
-   database: 'sakila',
- })
- 
- conncetion.connect((err) => {
-   if (err) { 
-   console.log('not connecting........ ' + JSON.stringify(err, undefined, 2));
-   } else {
-       console.log('db is sconnecting........');
-   }
-   });
- app.use(express.static(environmentRoot + '/public'));
-var routes = require('./api/routes');
-routes(app);
+db.createTable();
+
+app.use(express.static(environmentRoot + '/public'));
+app.use('/api', routes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
 const port = 3000;
-app.listen(port);
-console.log('API server started on: ' + port)
+app.listen(port, () => {
+  console.log(`API server started on: http://localhost:${port}`);
+});
