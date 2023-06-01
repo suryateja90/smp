@@ -9,12 +9,15 @@ const connection = mysql.createConnection({
 });
 
 function createTable() {
-    const fields = Object.keys(schema.student).map(fieldName => {
+    let fields = Object.keys(schema.student).map(fieldName => {
         const fieldDef = schema.student[fieldName];
         const type = fieldDef.type;
         const notNull = fieldDef.notNull ? 'NOT NULL' : '';
         return `${fieldName} ${type} ${notNull}`;
       }).join(', ');
+
+          // Add 'id' as a unique identifier
+    fields = `id INT AUTO_INCREMENT PRIMARY KEY, ${fields}`;
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS students (
      ${fields}

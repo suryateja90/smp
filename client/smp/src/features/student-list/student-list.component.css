@@ -1,0 +1,12 @@
+.mat-header-row {
+    margin-bottom: 1rem;
+  }
+  
+  .mat-row {
+    margin-bottom: 0.5rem;
+  }
+
+  th, td {
+    padding: 1rem;
+    text-align: left;
+  }

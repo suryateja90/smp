@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApicallsService } from 'src/app/services/apicalls.service';
+import { GenericService } from 'src/app/services/generic.service';
 
 @Component({
   selector: 'app-student-register',
   templateUrl: './student-register.component.html',
   styleUrls: ['./student-register.component.css']
 })
-export class StudentRegisterComponent implements OnInit {
+export class StudentRegisterComponent implements OnInit, OnDestroy {
 
   studentForm!: FormGroup;
 
-  constructor(private fb: FormBuilder,private api: ApicallsService) { }
+  constructor(private fb: FormBuilder, private serv: GenericService, private api: ApicallsService, public route: ActivatedRoute, public router: Router) { }
 
   ngOnInit(): void {
     this.studentForm = this.fb.group({
@@ -31,17 +33,30 @@ export class StudentRegisterComponent implements OnInit {
       previousSchoolRecords: [''],
       medicalConditions: ['']
     });
+
+    const data = this.serv.getEditData(); // Retrieve the passed data from the navigation state
+    if (data) {
+      // Map the data into the form group
+      Object.keys(data).forEach((key) => {
+        this.studentForm.controls[key]?.setValue(data[key]);
+      });
+    }
   }
 
   onSubmit(): void {
     console.log(this.studentForm?.value);
-    debugger;
-    this.api.post('students',this.studentForm?.value).subscribe((res) => {
-      this.api.showSuccess();
-    },
-    (err) => {
-      console.log(err);
-      this.api.showError();
-    })
+    this.api.post('students', this.studentForm?.value).subscribe(
+      (res) => {
+        this.api.showSuccess();
+      },
+      (error) => {
+        console.error(error);
+        this.api.showError();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.serv.addEditData(undefined);
   }
 }

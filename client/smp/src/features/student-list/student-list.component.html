@@ -1,0 +1,50 @@
+<ng-container *ngIf="dataSource">
+<div class="table-responsive">
+<table class="table table-hover" mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="phone">
+      <th class="table-dark" mat-header-cell *matHeaderCellDef> Phone </th>
+      <td class="align-middle" mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="id">
+      <th class="table-dark" mat-header-cell *matHeaderCellDef> ID </th>
+      <td class="align-middle" mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="name">
+      <th class="table-dark" mat-header-cell *matHeaderCellDef> Name </th>
+      <td class="align-middle" mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="email">
+      <th class="table-dark" mat-header-cell *matHeaderCellDef> Email </th>
+      <td class="align-middle" mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+      
+    <ng-container matColumnDef="actions">
+      <th class="table-dark" mat-header-cell *matHeaderCellDef></th>
+      <ng-template matCellDef let-element>
+        <td class="p-0">
+          <span role="button"><i class="fa fa-eye me-3" style="font-size:24px" (click)="openViewPopup(element)"></i>
+            <i class="fa fa-edit" style="font-size:24px" (click)="openEditPopup(element)"></i>
+          </span>
+        </td>
+      </ng-template>
+    </ng-container>
+    
+    
+    <tr class="table-light" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr class="table-light" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>
+  <nav class="my-3 d-flex justify-content-end">
+    <mat-paginator [length]="dataSource.data.length"
+                   [pageIndex]="pageIndex"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageChanged($event)"
+                   [showFirstLastButtons]="true"
+                   class="pagination justify-content-center">
+    </mat-paginator>
+  </nav>
+</ng-container>

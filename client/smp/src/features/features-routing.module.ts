@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { StudentListComponent } from './student-list/student-list.component';
 import { StudentRegisterComponent } from './student-register.component';
 
 const routes: Routes = [
-  { path: '', component: StudentRegisterComponent },
+  { path: 'reg', component: StudentRegisterComponent },
+  { path: '', component: StudentListComponent},
+  { path: 'edit', component: StudentRegisterComponent}
 ];
 
 @NgModule({
