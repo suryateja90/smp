@@ -16,8 +16,28 @@ const studentSchema = {
     medicalConditions: { type: 'VARCHAR(255)' },
   };
 
+
+  const createTableQueries = [
+    `
+    CREATE TABLE IF NOT EXISTS teachers (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL
+    );
+    
+    `,
+    `
+    CREATE TABLE IF NOT EXISTS classes (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL
+    );
+  
+    `
+  ]
+
 const schema = {
-    student: studentSchema
+    student: studentSchema,
+    tables: createTableQueries
 }
 
 module.exports = schema;

@@ -12,6 +12,8 @@ import { GenericService } from 'src/app/services/generic.service';
 export class StudentRegisterComponent implements OnInit, OnDestroy {
 
   studentForm!: FormGroup;
+  mode = 'create';
+  stdId: number | undefined;
 
   constructor(private fb: FormBuilder, private serv: GenericService, private api: ApicallsService, public route: ActivatedRoute, public router: Router) { }
 
@@ -36,11 +38,27 @@ export class StudentRegisterComponent implements OnInit, OnDestroy {
 
     const data = this.serv.getEditData(); // Retrieve the passed data from the navigation state
     if (data) {
+      this.stdId = data.id;
       // Map the data into the form group
       Object.keys(data).forEach((key) => {
         this.studentForm.controls[key]?.setValue(data[key]);
       });
+      this.mode = 'edit';
     }
+  }
+
+  onUpdate(): void {
+    let payload = this.studentForm?.value;
+    payload.id = this.stdId;
+    this.api.put('edit-students', payload).subscribe(
+      (res) => {
+        this.api.showSuccess();
+      },
+      (error) => {
+        console.error(error);
+        this.api.showError();
+      }
+    );
   }
 
   onSubmit(): void {

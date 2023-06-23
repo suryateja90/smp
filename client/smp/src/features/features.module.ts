@@ -12,6 +12,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StudentViewComponent } from './studet-view/student-view.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MarksComponent } from './marks/marks.component';
+import { StaffComponent } from './staff/staff.component';
+import { AddStaffComponent } from './add-staff/add-staff.component';
 
 
 @NgModule({
@@ -19,6 +22,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     StudentRegisterComponent,
     StudentListComponent,
     StudentViewComponent,
+    MarksComponent,
+    StaffComponent,
+    AddStaffComponent,
   ],
   imports: [
     CommonModule,

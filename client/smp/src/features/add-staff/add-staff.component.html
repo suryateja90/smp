@@ -1,0 +1,28 @@
+<form [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control form-control-sm input-small-width" id="name" formControlName="name"
+        [ngClass]="{ 'is-invalid': submitted && staffForm.controls.name.errors?.required }"
+        placeholder="Name *">
+      <div *ngIf="submitted && staffForm.controls.name.errors?.required" class="text-danger">
+        <div>Name is required.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control form-control-sm input-small-width" id="email" formControlName="email"
+        [ngClass]="{ 'is-invalid': submitted && (staffForm.controls.email.errors?.required || staffForm.controls.email.errors?.email) }"
+        placeholder="Email *">
+      <div *ngIf="submitted && staffForm.controls.email.errors?.required" class="text-danger">
+        <div>Email is required.</div>
+      </div>
+      <div *ngIf="submitted && staffForm.controls.email.errors?.email" class="text-danger">
+        <div>Invalid email format.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-dark" (click)="submitted = true">Submit</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="goBack()">Cancel</button>
+    </div>
+  </form>
+  

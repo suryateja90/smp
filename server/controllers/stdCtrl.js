@@ -72,10 +72,46 @@ function insertStudentData(req, res) {
   }
 }
 
-function updateStudentData(req, res) {
-  const query = 'UPDATE students SET field1 = ?, field2 = ? WHERE id = ?';
 
+function updateRow(table, fields) {
+
+  // Create the SQL query
+  const sql = `UPDATE ${table}
+    SET ${Object.entries(fields).map(([field, value]) => `${field} = '${value}'`).join(',')}
+    WHERE id = ${fields.id};`;
+
+  // Execute the SQL query
+  const result = db.connection.query(sql);
+
+  // Check if the query was successful
+  if (!result) {
+    throw new Error("Query failed");
+  }
+
+  // Return the number of rows updated
+  return result.affectedRows;
 }
+
+function updateStudentData(req, res) {
+  // Check if the user has provided the required data
+  if (!req.body.id) {
+    res.status(400).send("Please provide all required data");
+    return;
+  }
+
+  // Update the student data
+  const updatedRows = updateRow("students", req.body);
+
+  // Check if the update was successful
+  if (updatedRows === 0) {
+    res.status(404).send("No student found with the given id");
+    return;
+  }
+
+  // Successfully updated the student data
+  res.status(200).json({ message: "Student data updated successfully" });
+}
+
 
 function fetchStudentData(req, res) {
   const fetchQuery = 'SELECT * FROM students';
@@ -94,5 +130,6 @@ function fetchStudentData(req, res) {
 
 module.exports = {
     insertStudentData,
-    fetchStudentData
+    fetchStudentData,
+    updateStudentData
 };

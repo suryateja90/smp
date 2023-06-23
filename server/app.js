@@ -16,7 +16,8 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-db.createTable();
+db.createStudentTable();
+db.createTables();
 
 app.use(express.static(environmentRoot + '/public'));
 app.use('/api', routes);

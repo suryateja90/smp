@@ -1,0 +1,65 @@
+ 
+  .nav {
+    background-color: #f4f4f4;
+    width: 200px;
+    height: 100vh; /* Adjust the height as needed */
+    float: left;
+  }
+  
+  .content {
+    margin-left: 200px; /* Width of the nav */
+    padding: 20px;
+  }
+
+   .ul-list {
+    list-style: none;
+   }
+
+   .nav-link {
+    transition: background-color 0.3s ease, color 0.3s ease;  /* Add transition effect */
+  }
+
+   .nav-link:hover {
+  background-color: #ffffff; /* Change background color on hover */
+  color: #000000;
+  }
+  
+  .header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .text-black {
+    color: #000000; /* Set text color to black */
+  }
+
+  .banner {
+    flex-grow: 1;
+  }
+  
+  .links {
+    display: flex;
+  }
+  
+  .links a {
+    color: #fff;
+    margin-left: 10px;
+    text-decoration: none;
+  }
+  
+  /* Responsive styles */
+  @media only screen and (max-width: 768px) {
+    .nav {
+      width: 100%;
+      height: auto;
+      float: none;
+    }
+    
+    .content {
+      margin-left: 0;
+    }
+  }

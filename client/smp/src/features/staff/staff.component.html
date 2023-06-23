@@ -1,0 +1,33 @@
+<div class="container" style="margin-top: 100px;">
+    <div class="row" *ngIf="filterValues">
+        <form class="form" [formGroup]="form" (ngSubmit)="applyFilter()">
+            <div class="col-md-2">
+                <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-label>Name *</mat-label>
+                    <input matInput formControlName="name" placeholder="Enter name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2" style="margin-left: 10px;">
+                <mat-form-field appearance="outline" floatLabel="never">
+                    <mat-label>Email *</mat-label>
+                    <input matInput formControlName="email" placeholder="Enter email" required>
+                    <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+                    <mat-error *ngIf="form.controls.email.errors?.email">Invalid email format</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1" style="margin: 10px;">
+                <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Apply Filter</button>
+            </div>
+            <div class="col-md-1" style="margin: 10px;">
+                <button type="button" class="btn btn-light" *ngIf="!form.pristine" (click)="clearFilter()">Clear Filter</button>
+            </div>
+            <div class="col-md-3" style="margin: 15px;">
+                <strong>No of Rows Selected is </strong>
+                <span *ngIf="selection.selected.length > 0" style="font-weight: bolder;color:green;">"{{selection.selected.length}}"</span>
+                <span *ngIf="selection.selected.length === 0" style="font-weight: bolder;color:red;">"{{selection.selected.length}}"</span>
+            </div>
+        </form>
+    </div>
+    <!-- Rest of the code -->
+</div>

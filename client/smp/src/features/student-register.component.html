@@ -57,7 +57,8 @@
               <input type="text" class="form-control" id="emergencyContactPhone" placeholder="Enter emergency contact relationship" formControlName="emergencyContactPhone">
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+              <button  *ngIf="mode == 'create'" type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+              <button  *ngIf="mode == 'edit'" type="button" class="btn btn-primary" (click)="onUpdate()">Update</button>
               </div>
             </form>
         </div>

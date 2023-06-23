@@ -1,0 +1,9 @@
+/* In your component's CSS file or global styles */
+.input-small-width {
+    max-width: 500px; /* Adjust the width value as per your requirements */
+  }
+  
+  /* In your component's CSS file or global styles */
+.is-invalid {
+    border-color: red;
+  }
