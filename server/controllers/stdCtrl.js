@@ -1,4 +1,6 @@
 const db = require('../api/db');
+const yup = require('yup');
+
 
 // in the below function, Write a safeguarding condition where if request body is empty?
 function insertStudentData(req, res) {
@@ -73,6 +75,8 @@ function insertStudentData(req, res) {
 }
 
 
+
+
 function updateRow(table, fields) {
 
   // Create the SQL query
@@ -127,9 +131,58 @@ function fetchStudentData(req, res) {
   });
 }
 
+const staffSchema = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  email: yup.string().email('Invalid email format').required('Email is required'),
+  dob: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').required('DOB is required')
+});
+
+function insertStaffData(req, res) {
+  try {
+
+     // Validate the request body using the schema
+     staffSchema.validateSync(req.body);
+
+    // Insert the staff data
+    const insertedRowId = insertRow("staff", req.body);
+
+    // Successfully inserted the staff data
+    res.status(200).json({ message: "Staff data inserted successfully", insertedRowId });
+  } catch (error) {
+    // Handle the error
+    console.error("Error inserting staff data:", error);
+    res.status(500).json({ message: "Failed to insert staff data" });
+  }
+}
+
+function insertRow(table, fields) {
+  try {
+    // Create the SQL query
+    const sql = `INSERT INTO ${table} (${Object.keys(fields).join(',')})
+                 VALUES (${Object.values(fields).map(value => `'${value}'`).join(',')});`;
+
+    // Execute the SQL query
+    const result = db.connection.query(sql);
+
+    // Check if the query was successful
+    if (!result) {
+      throw new Error("Query failed");
+    }
+
+    // Return the ID of the inserted row
+    return result.insertId;
+  } catch (error) {
+    // Handle the error
+    console.error("Error inserting row:", error);
+    throw new Error("Failed to insert row");
+  }
+}
+
+
 
 module.exports = {
     insertStudentData,
     fetchStudentData,
-    updateStudentData
+    updateStudentData,
+    insertStaffData
 };

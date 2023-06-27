@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -15,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MarksComponent } from './marks/marks.component';
 import { StaffComponent } from './staff/staff.component';
 import { AddStaffComponent } from './add-staff/add-staff.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { AddStaffComponent } from './add-staff/add-staff.component';
     MatCardModule,
     MatIconModule,
     MatInputModule,
+    MatDatepickerModule, 
+    MatNativeDateModule,
     MatPaginatorModule,
     MatTableModule,
     MatDialogModule,

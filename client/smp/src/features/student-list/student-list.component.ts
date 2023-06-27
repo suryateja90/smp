@@ -64,6 +64,10 @@ export class StudentListComponent implements OnInit {
   onPageChanged(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
+  } 
+
+  navStd() {
+    this.router.navigate(['reg']);
   }
 
 }

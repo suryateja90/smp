@@ -21,6 +21,13 @@
       </div>
     </div>
     <div class="mb-3">
+      <label for="dob" class="form-label">DOB</label>
+      <input matInput id="dob" [disabled]="true" class="form-control form-control-sm input-small-width" formControlName="dob" [matDatepicker]="picker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+    </div>
+    <div class="mb-3">
       <button type="submit" class="btn btn-dark" (click)="submitted = true">Submit</button>
       <button type="button" class="btn btn-secondary ms-2" (click)="goBack()">Cancel</button>
     </div>

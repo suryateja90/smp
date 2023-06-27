@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ApicallsService } from 'src/app/services/apicalls.service';
 
 @Component({
   selector: 'app-add-staff',
@@ -11,12 +12,13 @@ export class AddStaffComponent implements OnInit {
   staffForm!: FormGroup;
   submitted:boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private location: Location) { }
+  constructor(private formBuilder: FormBuilder, private location: Location,private api: ApicallsService) { }
 
   ngOnInit(): void {
     this.staffForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      dob: ['', [Validators.required]]
     });
   }
 
@@ -24,6 +26,7 @@ export class AddStaffComponent implements OnInit {
   get form() {
     return this.staffForm.controls;
   }
+
 
   onSubmit() {
     if (this.staffForm.invalid) {
@@ -33,6 +36,15 @@ export class AddStaffComponent implements OnInit {
 
     // Submit the form data
     console.log(this.staffForm.value);
+    this.api.post('staff', this.staffForm?.value).subscribe(
+      (res) => {
+        this.api.showSuccess();
+      },
+      (error) => {
+        console.error(error);
+        this.api.showError();
+      }
+    );
   }
 
   goBack() {

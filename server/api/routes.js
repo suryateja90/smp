@@ -6,5 +6,6 @@ const ctrl = require('../controllers/stdctrl');
 router.post('/students', ctrl.insertStudentData);
 router.get('/get-students', ctrl.fetchStudentData);
 router.put('/edit-students', ctrl.updateStudentData);
+router.post('/staff', ctrl.insertStaffData);
 
 module.exports = router;

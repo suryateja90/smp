@@ -19,10 +19,11 @@ const studentSchema = {
 
   const createTableQueries = [
     `
-    CREATE TABLE IF NOT EXISTS teachers (
+    CREATE TABLE IF NOT EXISTS staff (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL
+      email VARCHAR(255) NOT NULL,
+      dob DATE NOT NULL
     );
     
     `,
