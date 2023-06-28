@@ -135,22 +135,33 @@ function fetchStudentData(req, res) {
 const staffSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   email: yup.string().email('Invalid email format').required('Email is required'),
-  dob: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').required('DOB is required')
+  dob: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').required('DOB is required'),
+  dateOfJoining: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').required('DOB is required'),
+  gender: yup.string().required('Gender is required'),
+  mobile: yup.string().required('Mobile is required').test('mobile-validation', 'Invalid mobile number', (value) => {
+    if (!value) return false; // If the value is not provided, it's considered invalid
+    const mobileRegex = /^[0-9]{10}$/; // Regex pattern for 10-digit mobile number
+    return mobileRegex.test(value.toString());
+  })
 });
 
 function insertStaffData(req, res) {
   try {
 
-    const { name, email, dob } = req.body;
+    const { name, email, dob, gender, mobile, dateOfJoining } = req.body;
 
 // Convert the dob to the desired format
 const formattedDob = moment(dob).format('YYYY-MM-DD');
+const formattedDoj = moment(dateOfJoining).format('YYYY-MM-DD');
 
 // Create a new object with the updated dob format
 const updatedData = {
   name,
   email,
-  dob: formattedDob
+  dob: formattedDob,
+  dateOfJoining: formattedDoj,
+  mobile,
+  gender
 };
      // Validate the request body using the schema
      staffSchema.validateSync(updatedData);

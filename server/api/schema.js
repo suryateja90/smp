@@ -23,7 +23,10 @@ const studentSchema = {
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
-      dob VARCHAR(255) NOT NULL
+      dob VARCHAR(255) NOT NULL,
+      gender VARCHAR(255) NOT NULL,
+      mobile VARCHAR(255) NOT NULL,
+      dateOfJoining VARCHAR(255) NOT NULL
     );
     
     `,

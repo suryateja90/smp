@@ -22,11 +22,50 @@
     </div>
     <div class="mb-3">
       <label for="dob" class="form-label">DOB</label>
-      <input matInput id="dob" [disabled]="true" class="form-control form-control-sm input-small-width" formControlName="dob" [matDatepicker]="picker">
+      <input matInput id="dob" [disabled]="true"  placeholder="DOB *" class="form-control form-control-sm input-small-width" formControlName="dob" [matDatepicker]="picker" [ngClass]="{ 'is-invalid': submitted && (staffForm.controls.email.errors?.required || staffForm.controls.email.errors?.email) }">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+      <div *ngIf="submitted && staffForm.controls.dob.errors?.required" class="text-danger">
+        <div>Date of birth is required.</div>
+      </div>
     </div>
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender</label>
+      <select class="form-control form-control-sm input-small-width" id="gender" formControlName="gender"
+        [ngClass]="{ 'is-invalid': submitted && staffForm.controls.gender.errors?.required }"  placeholder="Gender *">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <div *ngIf="submitted && staffForm.controls.gender.errors?.required" class="text-danger">
+        <div>Gender is required.</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="mobile" class="form-label">Mobile</label>
+      <input type="tel" class="form-control form-control-sm input-small-width" id="mobile" formControlName="mobile"
+        [ngClass]="{ 'is-invalid': submitted && staffForm.controls.mobile.errors?.required }"
+        placeholder="Mobile *"
+        (input)="sanitizeMobileInput($event.target)">
+      <div *ngIf="submitted && staffForm.controls.mobile.errors" class="text-danger">
+        <div *ngIf="staffForm.controls.mobile.errors.required">Mobile is required.</div>
+        <div *ngIf="staffForm.controls.mobile.errors.pattern">Invalid mobile number format.</div>
+      </div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="dateOfJoining" class="form-label">Date of Joining</label>
+      <input matInput id="dateOfJoining" [disabled]="true" placeholder="Date of Joining *" class="form-control form-control-sm input-small-width" formControlName="dateOfJoining" [matDatepicker]="joinDatePicker" [ngClass]="{ 'is-invalid': submitted && staffForm.controls.dateOfJoining.errors?.required }">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="joinDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #joinDatePicker [disabled]="false"></mat-datepicker>
+      <div *ngIf="submitted && staffForm.controls.dateOfJoining.errors?.required" class="text-danger">
+        <div>Date of joining is required.</div>
+      </div>
+    </div>
+    
+
     <div class="mb-3">
       <button type="submit" class="btn btn-dark" (click)="submitted = true">Submit</button>
       <button type="button" class="btn btn-secondary ms-2" (click)="goBack()">Cancel</button>

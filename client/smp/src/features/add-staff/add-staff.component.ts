@@ -18,7 +18,10 @@ export class AddStaffComponent implements OnInit {
     this.staffForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      dob: ['', [Validators.required]]
+      dob: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      mobile: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
+      dateOfJoining: ['', [Validators.required]]
     });
   }
 
@@ -27,6 +30,14 @@ export class AddStaffComponent implements OnInit {
     return this.staffForm.controls;
   }
 
+  sanitizeMobileInput(input: EventTarget | null) {
+    if (input instanceof HTMLInputElement) {
+      const sanitizedValue = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+      input.value = sanitizedValue; // Update the input value
+    }
+  }
+  
+  
 
   onSubmit() {
     if (this.staffForm.invalid) {
