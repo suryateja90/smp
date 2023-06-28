@@ -1,5 +1,6 @@
 const db = require('../api/db');
 const yup = require('yup');
+const moment = require('moment');
 
 
 // in the below function, Write a safeguarding condition where if request body is empty?
@@ -134,24 +135,35 @@ function fetchStudentData(req, res) {
 const staffSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   email: yup.string().email('Invalid email format').required('Email is required'),
-  dob: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').required('DOB is required')
+  dob: yup.string().matches(/^\d{2}-\d{2}-\d{4}$/, 'Invalid date format').required('DOB is required')
 });
 
 function insertStaffData(req, res) {
   try {
 
+    const { name, email, dob } = req.body;
+
+// Convert the dob to the desired format
+const formattedDob = moment(dob).format('MM-DD-YYYY');
+
+// Create a new object with the updated dob format
+const updatedData = {
+  name,
+  email,
+  dob: formattedDob
+};
      // Validate the request body using the schema
-     staffSchema.validateSync(req.body);
+     staffSchema.validateSync(updatedData);
 
     // Insert the staff data
-    const insertedRowId = insertRow("staff", req.body);
+    const insertedRowId = insertRow("staff", updatedData);
 
     // Successfully inserted the staff data
     res.status(200).json({ message: "Staff data inserted successfully", insertedRowId });
   } catch (error) {
     // Handle the error
     console.error("Error inserting staff data:", error);
-    res.status(500).json({ message: "Failed to insert staff data" });
+    res.status(500).json({ message: `Failed to insert staff data;${error}`  });
   }
 }
 
