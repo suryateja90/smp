@@ -135,7 +135,7 @@ function fetchStudentData(req, res) {
 const staffSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   email: yup.string().email('Invalid email format').required('Email is required'),
-  dob: yup.string().matches(/^\d{2}-\d{2}-\d{4}$/, 'Invalid date format').required('DOB is required')
+  dob: yup.string().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format').required('DOB is required')
 });
 
 function insertStaffData(req, res) {
@@ -144,7 +144,7 @@ function insertStaffData(req, res) {
     const { name, email, dob } = req.body;
 
 // Convert the dob to the desired format
-const formattedDob = moment(dob).format('MM-DD-YYYY');
+const formattedDob = moment(dob).format('YYYY-MM-DD');
 
 // Create a new object with the updated dob format
 const updatedData = {
